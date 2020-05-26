@@ -6,9 +6,26 @@ const ideas = [
   {id:5,title: 'Idea five',description: 'This is idea five description',allowComment: true,status: 'public'}
 ]
 
+// all idea
 module.exports.getAllIdeaController = (req,res) => {
   res.render('ideas/index',{
     title: 'All Idea',
     ideas
   })
+}
+
+// single idea
+module.exports.getSingleIdeaController = (req,res) => {
+  const id = parseInt(req.params.id);
+  const idea = ideas.find(idea=> idea.id === id);
+
+  if(idea) {
+    res.render('ideas/singleIdea',{
+      title: 'Single Idea',
+      idea
+    });
+  }
+  else {
+    res.status(404).render('error');
+  }
 }
