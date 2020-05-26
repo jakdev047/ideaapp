@@ -20,8 +20,9 @@ router.get('/about',(req,res)=>{
 
 // not found route
 router.get('*',(req,res)=> {
-  res.status(404).json({
-    error: '404 Not Found'
+  res.render('error',{
+    title: '404 !!!',
+    para: 'Page has not found'
   })
 })
 
