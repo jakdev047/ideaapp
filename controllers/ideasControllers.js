@@ -19,6 +19,22 @@ module.exports.getNewIdeaForm = (req,res) => {
   res.render('ideas/new')
 }
 
+// add idea
+module.exports.addIdeaController = (req,res) => {
+  const allowComment = req.body.allowComment ? true : false;
+  const idea = {
+    ...req.body,
+    id: ideas.length + 1,
+    allowComment
+  }
+
+  // add idea
+  ideas.unshift(idea);
+
+  // redirect
+  res.redirect('/ideas');
+}
+
 // single idea
 module.exports.getSingleIdeaController = (req,res) => {
   const id = parseInt(req.params.id);
