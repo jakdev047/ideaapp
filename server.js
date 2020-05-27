@@ -1,5 +1,6 @@
 /* =============== Require Files ================ */
 const express = require('express');
+const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
@@ -16,7 +17,8 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
+app.use(express.static(path.join(__dirname,'public')));
 
 app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs',helpers:{truncateContent}}));
 app.set('view engine', '.hbs')
