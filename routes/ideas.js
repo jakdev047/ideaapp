@@ -7,7 +7,8 @@ const {
   ,getNewIdeaForm,
   addIdeaController,
   getEditIdeaForm,
-  updateIdeaController
+  updateIdeaController,
+  deleteIdeaController
 } = require('../controllers/ideasControllers');
 
 // all idea route
@@ -24,6 +25,9 @@ router.get('/:id/edit',getEditIdeaForm);
 
 // edit idea route
 router.put('/:id',updateIdeaController);
+
+// delete idea route
+router.delete('/:id',deleteIdeaController);
 
 // single idea route
 router.get('/:id',getSingleIdeaController);

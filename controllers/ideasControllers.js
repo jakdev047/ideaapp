@@ -75,6 +75,22 @@ module.exports.updateIdeaController = (req,res) => {
   }
 }
 
+// delete idea
+module.exports.deleteIdeaController = (req,res) => {
+  const id = parseInt(req.params.id);
+  const idea = ideas.find(idea=> idea.id === id);
+
+  if(idea) {
+    // update idea add
+    ideas = ideas.filter(idea=> idea.id !== id);
+    // redirect
+    res.redirect(`/ideas`);
+  }
+  else {
+    res.render('error');
+  }
+}
+
 // single idea
 module.exports.getSingleIdeaController = (req,res) => {
   const id = parseInt(req.params.id);
