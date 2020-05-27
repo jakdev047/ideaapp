@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 
+const {truncateContent} = require('./helpers/hbs');
+
 const app = express();
 
 /* ============ Port ============= */
@@ -16,7 +18,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'))
 
-app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs'}));
+app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs',helpers:{truncateContent}}));
 app.set('view engine', '.hbs')
 
 /* ============ Route ============= */
