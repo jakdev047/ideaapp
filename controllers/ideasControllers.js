@@ -14,6 +14,11 @@ module.exports.getAllIdeaController = (req,res) => {
   })
 }
 
+// add idea form
+module.exports.getNewIdeaForm = (req,res) => {
+  res.render('ideas/new')
+}
+
 // single idea
 module.exports.getSingleIdeaController = (req,res) => {
   const id = parseInt(req.params.id);
