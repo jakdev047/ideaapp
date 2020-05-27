@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 let ideas = [
   {id:1,title: 'Idea One',description: 'This is idea one description',allowComment: true,status: 'public'},
   {id:2,title: 'Idea two',description: 'This is idea two description',allowComment: false,status: 'private'},
@@ -52,6 +54,25 @@ module.exports.getEditIdeaForm = (req,res) => {
     res.render('error')
   }
   
+}
+
+// edit idea
+module.exports.updateIdeaController = (req,res) => {
+  const id = parseInt(req.params.id);
+  const pickedValue = _.pick(req.body,['title','description','allowComment','status']);
+  const idea = ideas.find(idea=> idea.id === id);
+
+  if(idea) {
+    // update idea data
+    const ideaToUpdate ={id,...pickedValue};
+    // update idea add
+    ideas = ideas.map(idea=> idea.id === id ? idea=ideaToUpdate : idea);
+    // redirect
+    res.redirect(`/ideas/${id}`);
+  }
+  else {
+    res.render('error');
+  }
 }
 
 // single idea

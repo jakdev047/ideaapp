@@ -1,7 +1,14 @@
 const express = require('express');
 const router = express.Router();
 
-const {getAllIdeaController,getSingleIdeaController,getNewIdeaForm,addIdeaController,getEditIdeaForm} = require('../controllers/ideasControllers');
+const {
+  getAllIdeaController,
+  getSingleIdeaController
+  ,getNewIdeaForm,
+  addIdeaController,
+  getEditIdeaForm,
+  updateIdeaController
+} = require('../controllers/ideasControllers');
 
 // all idea route
 router.get('/',getAllIdeaController);
@@ -14,6 +21,9 @@ router.post('/',addIdeaController);
 
 // edit idea form route
 router.get('/:id/edit',getEditIdeaForm);
+
+// edit idea route
+router.put('/:id',updateIdeaController);
 
 // single idea route
 router.get('/:id',getSingleIdeaController);

@@ -3,6 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+const methodOverride = require('method-override');
 
 const app = express();
 
@@ -13,6 +14,7 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
+app.use(methodOverride('_method'))
 
 app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs'}));
 app.set('view engine', '.hbs')
