@@ -1,4 +1,4 @@
-const ideas = [
+let ideas = [
   {id:1,title: 'Idea One',description: 'This is idea one description',allowComment: true,status: 'public'},
   {id:2,title: 'Idea two',description: 'This is idea two description',allowComment: false,status: 'private'},
   {id:3,title: 'Idea three',description: 'This is idea three description',allowComment: true,status: 'public'},
@@ -16,7 +16,9 @@ module.exports.getAllIdeaController = (req,res) => {
 
 // add idea form
 module.exports.getNewIdeaForm = (req,res) => {
-  res.render('ideas/new')
+  res.render('ideas/new',{
+    title: 'Add Idea'
+  })
 }
 
 // add idea
@@ -33,6 +35,23 @@ module.exports.addIdeaController = (req,res) => {
 
   // redirect
   res.redirect('/ideas');
+}
+
+// edit idea form
+module.exports.getEditIdeaForm = (req,res) => {
+  const id = parseInt(req.params.id);
+  const idea = ideas.find(idea=> idea.id === id);
+
+  if(idea) {
+    res.render('ideas/edit',{
+      title: 'Edit Idea',
+      idea
+    })
+  }
+  else {
+    res.render('error')
+  }
+  
 }
 
 // single idea
