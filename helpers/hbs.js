@@ -7,6 +7,11 @@ const truncateContent = (content,number) => {
   }
 }
 
+const compareValues = (value1,value2) => {
+  return value1 === value2 && 'selected';
+}
+
 module.exports = {
-  truncateContent
+  truncateContent,
+  compareValues
 }
