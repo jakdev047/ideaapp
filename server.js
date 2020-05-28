@@ -1,5 +1,6 @@
 /* =============== Require Files ================ */
 const express = require('express');
+require('dotenv').config({path:'./config/key.env'});
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -12,6 +13,10 @@ const app = express();
 
 /* ============ Port ============= */
 const PORT = process.env.PORT || 8080;
+
+/* ============ Connecting mongodb ============= */
+const {connectDB} = require('./db/dbConnect');
+connectDB();
 
 /* =============== Middleweare ================ */
 app.use(cors());
