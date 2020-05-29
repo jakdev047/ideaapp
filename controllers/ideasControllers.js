@@ -77,21 +77,25 @@ module.exports.getEditIdeaForm = async(req,res) => {
 }
 
 // edit idea
-module.exports.updateIdeaController = (req,res) => {
-  const id = parseInt(req.params.id);
+module.exports.updateIdeaController = async(req,res) => {
+  const id = req.params.id;
+  const allowComment = req.body.allowComment ? true : false;
+  req.body.allowComment = allowComment;
   const pickedValue = _.pick(req.body,['title','description','allowComment','status']);
-  const idea = ideas.find(idea=> idea.id === id);
 
-  if(idea) {
-    // update idea data
-    const ideaToUpdate ={id,...pickedValue};
-    // update idea add
-    ideas = ideas.map(idea=> idea.id === id ? idea=ideaToUpdate : idea);
-    // redirect
-    res.redirect(`/ideas/${id}`);
-  }
-  else {
-    res.render('error');
+  try {
+    const idea = await Idea.findByIdAndUpdate(id,pickedValue);
+    if(idea) {
+      // redirect
+      res.redirect(`/ideas/${id}`);
+    }
+    else {
+      res.render('error');
+    }
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
   }
 }
 

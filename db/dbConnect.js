@@ -6,7 +6,8 @@ module.exports.connectDB = async() => {
   try {
     await mongoose.connect('mongodb://localhost:27017/ideas-app',{
       useNewUrlParser:true,
-      useUnifiedTopology:true
+      useUnifiedTopology:true,
+      useFindAndModify:false
     })
 
     console.log(`Database has running...`)
