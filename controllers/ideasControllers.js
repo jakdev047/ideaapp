@@ -43,9 +43,8 @@ module.exports.addIdeaController = async(req,res) => {
       ...req.body,
       allowComment
     });
-    console.log(idea);
     await idea.save();
-    // // redirect
+    // redirect
     res.redirect('/ideas');
   } 
   catch (err) {

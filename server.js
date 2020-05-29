@@ -4,6 +4,7 @@ require('dotenv').config({path:'./config/key.env'});
 const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 
@@ -24,6 +25,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname,'public')));
+app.use(morgan('dev'));
 
 app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs',helpers:{truncateContent,compareValues}}));
 app.set('view engine', '.hbs')
