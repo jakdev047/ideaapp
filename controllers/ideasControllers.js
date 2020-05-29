@@ -1,12 +1,8 @@
 const Idea = require('../models/ideas');
 const _ = require('lodash');
 
-// let ideas = [
-//   // {id:1,title: 'Idea One',description: 'This is idea one description',allowComment: true,status: 'public'}
-// ]
-
-function generateIdeaDoc(id,title,description) {
-  return {id,title,description}
+function generateIdeaDoc(id,title,description,status,allowComment) {
+  return {id,title,description,status,allowComment}
 }
 
 // all idea
@@ -14,7 +10,7 @@ module.exports.getAllIdeaController = async(req,res) => {
   try {
     const ideas = await Idea.find();
     const contexts = {
-      ideaDocuments: ideas.map(idea=>(generateIdeaDoc(idea._id,idea.title,idea.description)))
+      ideaDocuments: ideas.map(idea=>(generateIdeaDoc(idea._id,idea.title,idea.description,idea.status,idea.allowComment)))
     }
     res.render('ideas/index',{
       title: 'All Idea',
@@ -58,7 +54,7 @@ module.exports.getEditIdeaForm = async(req,res) => {
   const id = req.params.id;
   try {
     const idea = await Idea.findById(id);
-    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description);
+    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description,idea.status,idea.allowComment);
 
     if(idea) {
       res.render('ideas/edit',{

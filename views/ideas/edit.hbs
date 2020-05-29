@@ -11,9 +11,9 @@
   </div>
   <div class="form-group">
     <label for="status">Idea Status</label>
-    <select class="form-control" id="status" name="status">
-      <option value="public" {{compareValues 'public' idea.status}}>public</option>
-      <option value="private" {{compareValues 'private' idea.status}}>private</option>
+    <select id="status" name="status">
+      <option value="public" {{compareValues 'public' idea.status 'select'}}>public</option>
+      <option value="private" {{compareValues 'private' idea.status 'select'}}>private</option>
     </select>
   </div>
   <div class="form-group form-check">
