@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 module.exports.connectDB = async() => {
   try {
-    await mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds139899.mlab.com:39899/ideaapp`,{
+    await mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds163014.mlab.com:63014/ideaapp`,{
       useNewUrlParser:true,
       useUnifiedTopology:true
     })

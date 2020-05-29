@@ -1,19 +1,31 @@
+const Idea = require('../models/ideas');
 const _ = require('lodash');
 
-let ideas = [
-  {id:1,title: 'Idea One',description: 'This is idea one description',allowComment: true,status: 'public'},
-  {id:2,title: 'Idea two',description: 'Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.',allowComment: false,status: 'private'},
-  {id:3,title: 'Idea three',description: 'This is idea three description',allowComment: true,status: 'public'},
-  {id:4,title: 'Idea four',description: 'This is idea four description',allowComment: false,status: 'private'},
-  {id:5,title: 'Idea five',description: 'This is idea five description',allowComment: true,status: 'public'}
-]
+// let ideas = [
+//   // {id:1,title: 'Idea One',description: 'This is idea one description',allowComment: true,status: 'public'}
+// ]
+
+function generateIdeaDoc(id,title,description) {
+  return {id,title,description}
+}
 
 // all idea
-module.exports.getAllIdeaController = (req,res) => {
-  res.render('ideas/index',{
-    title: 'All Idea',
-    ideas
-  })
+module.exports.getAllIdeaController = async(req,res) => {
+  try {
+    const ideas = await Idea.find();
+    const contexts = {
+      ideaDocuments: ideas.map(idea=>(generateIdeaDoc(idea._id,idea.title,idea.description)))
+    }
+    res.render('ideas/index',{
+      title: 'All Idea',
+      path: '/ideas',
+      ideas: contexts.ideaDocuments
+    });
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
+  }
 }
 
 // add idea form
@@ -24,36 +36,45 @@ module.exports.getNewIdeaForm = (req,res) => {
 }
 
 // add idea
-module.exports.addIdeaController = (req,res) => {
-  const allowComment = req.body.allowComment ? true : false;
-  const idea = {
-    ...req.body,
-    id: ideas.length + 1,
-    allowComment
+module.exports.addIdeaController = async(req,res) => {
+  try {
+    const allowComment = req.body.allowComment ? true : false;
+    const idea = new Idea({
+      ...req.body,
+      allowComment
+    });
+    console.log(idea);
+    await idea.save();
+    // // redirect
+    res.redirect('/ideas');
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
   }
-
-  // add idea
-  ideas.unshift(idea);
-
-  // redirect
-  res.redirect('/ideas');
 }
 
 // edit idea form
-module.exports.getEditIdeaForm = (req,res) => {
-  const id = parseInt(req.params.id);
-  const idea = ideas.find(idea=> idea.id === id);
+module.exports.getEditIdeaForm = async(req,res) => {
+  const id = req.params.id;
+  try {
+    const idea = await Idea.findById(id);
+    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description);
 
-  if(idea) {
-    res.render('ideas/edit',{
-      title: 'Edit Idea',
-      idea
-    })
+    if(idea) {
+      res.render('ideas/edit',{
+        title: ideaDocument.title,
+        idea: ideaDocument
+      })
+    }
+    else {
+      res.render('error')
+    }
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
   }
-  else {
-    res.render('error')
-  }
-  
 }
 
 // edit idea
@@ -92,17 +113,25 @@ module.exports.deleteIdeaController = (req,res) => {
 }
 
 // single idea
-module.exports.getSingleIdeaController = (req,res) => {
-  const id = parseInt(req.params.id);
-  const idea = ideas.find(idea=> idea.id === id);
+module.exports.getSingleIdeaController = async(req,res) => {
+  const id = req.params.id;
+  try {
+    const idea = await Idea.findById(id);
+    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description);
 
-  if(idea) {
-    res.render('ideas/singleIdea',{
-      title: 'Single Idea',
-      idea
-    });
+    if(idea) {
+      res.render('ideas/singleIdea',{
+        title: ideaDocument.title,
+        idea: ideaDocument
+      });
+    }
+    else {
+      res.status(404).render('error');
+    }
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
   }
-  else {
-    res.status(404).render('error');
-  }
+  
 }
