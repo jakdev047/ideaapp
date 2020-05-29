@@ -100,19 +100,25 @@ module.exports.updateIdeaController = async(req,res) => {
 }
 
 // delete idea
-module.exports.deleteIdeaController = (req,res) => {
-  const id = parseInt(req.params.id);
-  const idea = ideas.find(idea=> idea.id === id);
+module.exports.deleteIdeaController = async(req,res) => {
+  const id = req.params.id;
+  
+  try {
+    const idea = await Idea.findByIdAndDelete(id);
+    if(idea) {
+      // redirect
+      res.redirect(`/ideas`);
+    }
+    else {
+      res.render('error');
+    }
+  } 
+  catch (err) {
+    console.log('err', err.message);
+    res.status(500).render('error',{title: 'Error'});
+  }
 
-  if(idea) {
-    // update idea add
-    ideas = ideas.filter(idea=> idea.id !== id);
-    // redirect
-    res.redirect(`/ideas`);
-  }
-  else {
-    res.render('error');
-  }
+  
 }
 
 // single idea
