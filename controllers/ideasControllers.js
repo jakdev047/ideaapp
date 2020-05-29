@@ -67,7 +67,7 @@ module.exports.getEditIdeaForm = async(req,res) => {
       })
     }
     else {
-      res.render('error')
+      res.status(404).render('error')
     }
   } 
   catch (err) {
@@ -90,7 +90,7 @@ module.exports.updateIdeaController = async(req,res) => {
       res.redirect(`/ideas/${id}`);
     }
     else {
-      res.render('error');
+      res.status(404).render('error');
     }
   } 
   catch (err) {
@@ -110,7 +110,7 @@ module.exports.deleteIdeaController = async(req,res) => {
       res.redirect(`/ideas`);
     }
     else {
-      res.render('error');
+      res.status(404).render('error');
     }
   } 
   catch (err) {
