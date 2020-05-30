@@ -1,5 +1,6 @@
 const Idea = require('../models/ideas');
 const _ = require('lodash');
+const {validationResult} = require('express-validator');
 
 function generateIdeaDoc(id,title,description,status,allowComment) {
   return {id,title,description,status,allowComment}
@@ -33,6 +34,17 @@ module.exports.getNewIdeaForm = (req,res) => {
 
 // add idea
 module.exports.addIdeaController = async(req,res) => {
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.render('ideas/new',{
+      title: 'Add Idea',
+      idea: {
+        title: req.body.title,
+        description: req.body.description
+      },
+      errMsg: errors.array()[0].msg
+    });
+  }
   try {
     const allowComment = req.body.allowComment ? true : false;
     const idea = new Idea({
