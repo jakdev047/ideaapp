@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Idea = require('../models/ideas');
 const _ = require('lodash');
 const {validationResult} = require('express-validator');
@@ -146,18 +147,22 @@ module.exports.deleteIdeaController = async(req,res) => {
 // single idea
 module.exports.getSingleIdeaController = async(req,res) => {
   const id = req.params.id;
+  if(!mongoose.Types.ObjectId.isValid(id)) {
+    return res.render('notfound',{
+      title: '404 Error'
+    });
+  }
   try {
     const idea = await Idea.findById(id);
-    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description);
-
     if(idea) {
+      const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description);
       res.render('ideas/singleIdea',{
         title: ideaDocument.title,
         idea: ideaDocument
       });
     }
     else {
-      res.status(404).render('error');
+      res.status(404).render('notfound');
     }
   } 
   catch (err) {
