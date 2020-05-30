@@ -87,6 +87,20 @@ module.exports.getEditIdeaForm = async(req,res) => {
 // edit idea
 module.exports.updateIdeaController = async(req,res) => {
   const id = req.params.id;
+
+  const errors = validationResult(req);
+  if(!errors.isEmpty()){
+    return res.render('ideas/edit',{
+      title: 'Edit Idea',
+      idea: {
+        id,
+        title: req.body.title,
+        description: req.body.description
+      },
+      errMsg: errors.array()[0].msg
+    });
+  }
+
   const allowComment = req.body.allowComment ? true : false;
   req.body.allowComment = allowComment;
   const pickedValue = _.pick(req.body,['title','description','allowComment','status']);
