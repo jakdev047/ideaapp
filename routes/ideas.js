@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const ideaValidator = require('../validators/ideaValidator');
 const addIdeavalidator = require('../validators/addIdeavalidator');
+const updateIdeaValidator = require('../validators/updateIdeaValidator');
 
 const {
   getAllIdeaController,
@@ -26,7 +27,7 @@ router.post('/',[ideaValidator(),addIdeavalidator],addIdeaController);
 router.get('/:id/edit',getEditIdeaForm);
 
 // edit idea route
-router.put('/:id',ideaValidator(),updateIdeaController);
+router.put('/:id',[ideaValidator(),updateIdeaValidator],updateIdeaController);
 
 // delete idea route
 router.delete('/:id',deleteIdeaController);
