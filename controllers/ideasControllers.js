@@ -35,17 +35,6 @@ module.exports.getNewIdeaForm = (req,res) => {
 
 // add idea
 module.exports.addIdeaController = async(req,res) => {
-  const errors = validationResult(req);
-  if(!errors.isEmpty()){
-    return res.render('ideas/new',{
-      title: 'Add Idea',
-      idea: {
-        title: req.body.title,
-        description: req.body.description
-      },
-      errMsg: errors.array()[0].msg
-    });
-  }
   try {
     const allowComment = req.body.allowComment ? true : false;
     const idea = new Idea({

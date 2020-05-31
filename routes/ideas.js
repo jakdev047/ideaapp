@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ideaValidator = require('../validators/ideaValidator');
+const addIdeavalidator = require('../validators/addIdeavalidator');
 
 const {
   getAllIdeaController,
@@ -19,7 +20,7 @@ router.get('/',getAllIdeaController);
 router.get('/new',getNewIdeaForm);
 
 // new idea form route
-router.post('/',ideaValidator(),addIdeaController);
+router.post('/',[ideaValidator(),addIdeavalidator],addIdeaController);
 
 // edit idea form route
 router.get('/:id/edit',getEditIdeaForm);
