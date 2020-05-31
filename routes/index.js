@@ -19,7 +19,7 @@ router.get('/about',(req,res)=>{
 
 // not found route
 router.get('*',(req,res)=> {
-  res.render('error',{
+  res.render('notfound',{
     title: '404 !!!',
     para: 'Page has not found'
   })
