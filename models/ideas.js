@@ -24,7 +24,14 @@ const ideaSchema = new Schema(
         values: ['public','private'],
         message: 'please provide public or private in status field'
       }
-    }
+    },
+    tags: [
+      {
+        type: String,
+        trim: true,
+        required: [true,'Idea must be on tags']
+      }
+    ]
   },
   {
     timestamps: true

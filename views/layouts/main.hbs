@@ -10,6 +10,9 @@
 
     <title>{{title}}</title>
 
+    <!-- bootstrap-tagsinput.css -->
+    <link rel="stylesheet" href="/css/bootstrap-tagsinput.css">
+
     <!-- style.css -->
     <link rel="stylesheet" href="/css/style.css">
 
@@ -30,14 +33,20 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
+    <script src="/js/bootstrap-tagsinput.min.js"></script>
+
     <script>
-      ClassicEditor
-        .create( document.querySelector('#description'),{
-          toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]
-        })
-        .catch( error => {
-          console.error( error );
-        });
+      const el = document.querySelector('#description');
+      if(el) {
+        ClassicEditor
+          .create( document.querySelector('#description'),{
+            toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ]
+          })
+          .catch( error => {
+            console.error( error );
+          });
+      }
+      
     </script>
 
   </body>

@@ -1,3 +1,14 @@
 .ck-editor__editable {
   min-height: 200px;
 }
+
+.bootstrap-tagsinput .tag {
+  margin-right: 2px;
+  color: #fff;
+}
+.label-info {
+  background-color: #000;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+}

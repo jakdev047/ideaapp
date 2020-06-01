@@ -36,6 +36,7 @@ module.exports.getNewIdeaForm = (req,res) => {
 module.exports.addIdeaController = async(req,res,next) => {
   try {
     const allowComment = req.body.allowComment ? true : false;
+    req.body.tags = req.body.tags.split(',');
     const idea = new Idea({
       ...req.body,
       allowComment
