@@ -10,6 +10,10 @@
     </textarea>
   </div>
   <div class="form-group">
+    <label for="tags">Tags</label>
+    <input type="text" class="form-control" id="tags" name="tags" data-role="tagsinput" value="{{idea.tags}}">
+  </div>
+  <div class="form-group">
     <label for="status">Idea Status</label>
     <select id="status" name="status">
       <option value="public" {{compareValues 'public' idea.status 'select'}}>public</option>
@@ -20,5 +24,6 @@
     <input type="checkbox" class="form-check-input" id="allowComment" {{#if idea.allowComment}} checked="true" {{/if}} name="allowComment">
     <label class="form-check-label" for="allowComment">Allow Comments</label>
   </div>
+  <button type="submit" style="display: none;" disabled>Edit Idea</button>
   <button type="submit" class="btn btn-primary">Edit Idea</button>
 </form>

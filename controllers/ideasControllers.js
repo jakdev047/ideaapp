@@ -3,8 +3,8 @@ const Idea = require('../models/ideas');
 const _ = require('lodash');
 const {validationResult} = require('express-validator');
 
-function generateIdeaDoc(id,title,description,status,allowComment) {
-  return {id,title,description,status,allowComment}
+function generateIdeaDoc(id,title,description,status,allowComment,tags) {
+  return {id,title,description,status,allowComment,tags}
 }
 
 // all idea
@@ -55,8 +55,7 @@ module.exports.getEditIdeaForm = async(req,res,next) => {
   const id = req.params.id;
   try {
     const idea = await Idea.findById(id);
-    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description,idea.status,idea.allowComment);
-
+    const ideaDocument = generateIdeaDoc(idea._id,idea.title,idea.description,idea.status,idea.allowComment,idea.tags);
     if(idea) {
       res.render('ideas/edit',{
         title: ideaDocument.title,
@@ -77,7 +76,8 @@ module.exports.updateIdeaController = async(req,res,next) => {
   const id = req.params.id;
   const allowComment = req.body.allowComment ? true : false;
   req.body.allowComment = allowComment;
-  const pickedValue = _.pick(req.body,['title','description','allowComment','status']);
+  req.body.tags = req.body.tags.split(',');
+  const pickedValue = _.pick(req.body,['title','description','allowComment','status','tags']);
 
   try {
     const idea = await Idea.findByIdAndUpdate(id,pickedValue);
