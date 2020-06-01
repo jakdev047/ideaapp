@@ -8,7 +8,7 @@ function generateIdeaDoc(id,title,description,status,allowComment) {
 }
 
 // all idea
-module.exports.getAllIdeaController = async(req,res) => {
+module.exports.getAllIdeaController = async(req,res,next) => {
   try {
     const ideas = await Idea.find();
     const contexts = {
@@ -21,8 +21,7 @@ module.exports.getAllIdeaController = async(req,res) => {
     });
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
 }
 
@@ -34,7 +33,7 @@ module.exports.getNewIdeaForm = (req,res) => {
 }
 
 // add idea
-module.exports.addIdeaController = async(req,res) => {
+module.exports.addIdeaController = async(req,res,next) => {
   try {
     const allowComment = req.body.allowComment ? true : false;
     const idea = new Idea({
@@ -46,13 +45,12 @@ module.exports.addIdeaController = async(req,res) => {
     res.redirect('/ideas');
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
 }
 
 // edit idea form
-module.exports.getEditIdeaForm = async(req,res) => {
+module.exports.getEditIdeaForm = async(req,res,next) => {
   const id = req.params.id;
   try {
     const idea = await Idea.findById(id);
@@ -65,17 +63,16 @@ module.exports.getEditIdeaForm = async(req,res) => {
       })
     }
     else {
-      res.status(404).render('error')
+      res.status(404).render('notfound')
     }
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
 }
 
 // edit idea
-module.exports.updateIdeaController = async(req,res) => {
+module.exports.updateIdeaController = async(req,res,next) => {
   const id = req.params.id;
   const allowComment = req.body.allowComment ? true : false;
   req.body.allowComment = allowComment;
@@ -88,17 +85,16 @@ module.exports.updateIdeaController = async(req,res) => {
       res.redirect(`/ideas/${id}`);
     }
     else {
-      res.status(404).render('error');
+      res.status(404).render('notfound');
     }
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
 }
 
 // delete idea
-module.exports.deleteIdeaController = async(req,res) => {
+module.exports.deleteIdeaController = async(req,res,next) => {
   const id = req.params.id;
   
   try {
@@ -112,15 +108,12 @@ module.exports.deleteIdeaController = async(req,res) => {
     }
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
-
-  
 }
 
 // single idea
-module.exports.getSingleIdeaController = async(req,res) => {
+module.exports.getSingleIdeaController = async(req,res,next) => {
   const id = req.params.id;
   if(!mongoose.Types.ObjectId.isValid(id)) {
     return res.render('notfound',{
@@ -141,8 +134,7 @@ module.exports.getSingleIdeaController = async(req,res) => {
     }
   } 
   catch (err) {
-    console.log('err', err.message);
-    res.status(500).render('error',{title: 'Error'});
+    next(err);
   }
   
 }

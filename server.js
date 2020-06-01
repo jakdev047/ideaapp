@@ -38,7 +38,12 @@ const indexRoute = require('./routes');
 app.use('/ideas',ideasRoute);
 
 // base route
-app.use('/',indexRoute);
+app.use(indexRoute);
+
+app.use((err,req,res,next)=>{
+  console.log('err', err.message);
+  res.status(500).render('error',{title: 'Error'});
+})
 
 /* ============ Listen ============= */
 app.listen(PORT,()=>{
