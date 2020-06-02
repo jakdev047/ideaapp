@@ -31,8 +31,12 @@ app.engine('.hbs',exphbs({defaultLayout:'main',extname: '.hbs',helpers:{truncate
 app.set('view engine', '.hbs')
 
 /* ============ Route ============= */
+const authRoute = require('./routes/auth');
 const ideasRoute = require('./routes/ideas');
 const indexRoute = require('./routes');
+
+// ideas route
+app.use('/auth',authRoute);
 
 // ideas route
 app.use('/ideas',ideasRoute);
