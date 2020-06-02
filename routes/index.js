@@ -13,7 +13,8 @@ router.get('/',(req,res)=>{
 router.get('/about',(req,res)=>{
   res.render('about',{
     title: 'About',
-    para: 'This is Idea Share App build by node.js'
+    para: 'This is Idea Share App build by node.js',
+    path: '/about'
   })
 });
 

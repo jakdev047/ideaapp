@@ -28,7 +28,8 @@ module.exports.getAllIdeaController = async(req,res,next) => {
 // add idea form
 module.exports.getNewIdeaForm = (req,res) => {
   res.render('ideas/new',{
-    title: 'Add Idea'
+    title: 'Add Idea',
+    path: '/ideas/new'
   })
 }
 
