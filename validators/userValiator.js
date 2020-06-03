@@ -27,4 +27,14 @@ const registerValidator = () => {
   ];
 };
 
-module.exports = registerValidator;
+const loginValidator = () => {
+  return [
+    check('email').notEmpty().withMessage('email is required').isEmail().withMessage('email must be valid'),
+    check('password').notEmpty().withMessage('password is required'),
+  ];
+};
+
+module.exports = {
+  registerValidator,
+  loginValidator
+};
