@@ -52,3 +52,13 @@ module.exports.postLoginController = async(req,res,next) => {
     next(err);
   }
 };
+
+module.exports.getLogoutController = async(req,res,next) => {
+  try {
+    await req.session.destroy();
+    res.redirect('/auth/login');
+  } 
+  catch (err) {
+    next(err);  
+  }
+};
