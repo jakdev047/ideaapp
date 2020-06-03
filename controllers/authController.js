@@ -36,7 +36,9 @@ module.exports.postLoginController = async(req,res,next) => {
       const isMatch = await bcrypt.compare(req.body.password,user.password);
       if(isMatch) {
         // password match
-        console.log('Login Success');
+        req.session.isLoggedIn = 'true';
+        req.session.user = user;
+        res.redirect('/ideas');
       }
       else {
         console.log('Invalid email or password');

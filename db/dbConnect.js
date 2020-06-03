@@ -2,9 +2,11 @@ const mongoose = require('mongoose');
 
 // mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds163014.mlab.com:63014/ideaapp
 
-module.exports.connectDB = async() => {
+const url = 'mongodb://localhost:27017/ideas-app';
+
+const connectDB = async function(){
   try {
-    await mongoose.connect('mongodb://localhost:27017/ideas-app',{
+    await mongoose.connect(url,{
       useNewUrlParser:true,
       useUnifiedTopology:true,
       useFindAndModify:false,
@@ -16,4 +18,9 @@ module.exports.connectDB = async() => {
   catch(err) {
     console.log(err);
   }
+};
+
+module.exports = {
+  url,
+  connectDB
 }
