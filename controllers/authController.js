@@ -1,15 +1,10 @@
 const User = require('../models/user');
 
 module.exports.getRegisterController = (req,res,next) => {
-  try {
-    res.render('auth/register',{
-      title: 'Register',
-      path: '/auth/register'
-    })
-  } 
-  catch (err) {
-    next(err);
-  }
+  res.render('auth/register',{
+    title: 'Register',
+    path: '/auth/register'
+  });
 };
 
 module.exports.addRegisterController = async(req,res,next) => {
@@ -21,4 +16,11 @@ module.exports.addRegisterController = async(req,res,next) => {
   catch (err) {
     next(err);
   }
-}
+};
+
+module.exports.getLoginController = (req,res) => {
+  res.render('auth/login',{
+    title: 'Login',
+    path: '/auth/login'
+  });
+};
