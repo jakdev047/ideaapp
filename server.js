@@ -9,7 +9,6 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const {isAuth} = require('./middleware/auth');
 
 const {truncateContent,compareValues,comparePath} = require('./helpers/hbs');
 
@@ -46,7 +45,9 @@ app.use(session({
   }
 }));
 
+// global login user data capture
 app.use((req,res,next)=> {
+  res.locals.user = req.session.user || null;
   next();
 });
 
@@ -59,7 +60,7 @@ const indexRoute = require('./routes');
 app.use('/auth',authRoute);
 
 // ideas route
-app.use('/ideas',isAuth,ideasRoute);
+app.use('/ideas',ideasRoute);
 
 // base route
 app.use(indexRoute);
