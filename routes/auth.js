@@ -27,4 +27,18 @@ router.post(
 // get logout 
 router.get('/logout',getLogoutController);
 
+// get google route
+router.get(
+  '/google',
+  passport.authenticate('google', { scope: ['profile','email'] }) 
+);
+router.get(
+  '/google/callback',
+  passport.authenticate('google', { failureRedirect: '/auth/login' }),
+  (req, res, next) => {
+    console.log(req.user);
+    res.redirect('/ideas');
+  }
+);
+
 module.exports = router;

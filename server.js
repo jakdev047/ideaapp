@@ -11,6 +11,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 require('./middleware/passport').localstrategy(passport);
+require('./middleware/passport').googlestrategy(passport);
 const flash = require('connect-flash');
 
 const {truncateContent,compareValues,comparePath} = require('./helpers/hbs');
