@@ -3,6 +3,7 @@ const isAuth = (req,res,next) => {
     next();
   }
   else {
+    req.flash('error_msg','Please login to perform the action');
     res.redirect('/auth/login');
   }
 };

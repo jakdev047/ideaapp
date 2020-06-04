@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const Idea = require('../models/ideas');
 const _ = require('lodash');
-const {validationResult} = require('express-validator');
 
 function generateIdeaDoc(id,title,description,status,allowComment,tags) {
   return {id,title,description,status,allowComment,tags}
@@ -43,7 +42,8 @@ module.exports.addIdeaController = async(req,res,next) => {
       allowComment
     });
     await idea.save();
-    // redirect
+    // redirect & flash
+    req.flash('success_msg','New Idea Successfully');
     res.redirect('/ideas');
   } 
   catch (err) {
@@ -83,7 +83,8 @@ module.exports.updateIdeaController = async(req,res,next) => {
   try {
     const idea = await Idea.findByIdAndUpdate(id,pickedValue);
     if(idea) {
-      // redirect
+      // redirect & flash
+      req.flash('success_msg','Update Idea Successfully');
       res.redirect(`/ideas/${id}`);
     }
     else {
@@ -102,7 +103,8 @@ module.exports.deleteIdeaController = async(req,res,next) => {
   try {
     const idea = await Idea.findByIdAndDelete(id);
     if(idea) {
-      // redirect
+      // redirect & flash
+      req.flash('success_msg','Delete Idea Successfully');
       res.redirect(`/ideas`);
     }
     else {

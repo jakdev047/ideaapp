@@ -1,5 +1,4 @@
 const User = require('../models/user');
-const bcrypt = require('bcryptjs');
 
 module.exports.getRegisterController = (req,res,next) => {
   res.render('auth/register',{
@@ -13,7 +12,7 @@ module.exports.addRegisterController = async(req,res,next) => {
     const user = new User(req.body);
     await user.save();
     req.flash('success_msg','Registration Successfully');
-    res.redirect('/ideas');
+    res.redirect('/auth/login');
   } 
   catch (err) {
     next(err);
