@@ -9,6 +9,8 @@ const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
+const passport = require('passport');
+require('./middleware/passport').localstrategy(passport);
 
 const {truncateContent,compareValues,comparePath} = require('./helpers/hbs');
 
@@ -45,9 +47,12 @@ app.use(session({
   }
 }));
 
+app.use(passport.initialize());
+app.use(passport.session());
+
 // global login user data capture
 app.use((req,res,next)=> {
-  res.locals.user = req.session.user || null;
+  res.locals.user = req.user || null;
   next();
 });
 

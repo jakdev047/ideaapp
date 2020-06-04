@@ -1,5 +1,5 @@
 const isAuth = (req,res,next) => {
-  if(req.session.isLoggedIn === 'true') {
+  if(req.isAuthenticated()) {
     next();
   }
   else {

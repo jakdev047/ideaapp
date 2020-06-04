@@ -26,39 +26,11 @@ module.exports.getLoginController = (req,res) => {
   });
 };
 
-module.exports.postLoginController = async(req,res,next) => {
-  try {
-    // check email
-    const user = await User.findOne({email:req.body.email});
-    // if email exis
-    if(user) {
-      // compare password
-      const isMatch = await bcrypt.compare(req.body.password,user.password);
-      if(isMatch) {
-        // password match
-        req.session.isLoggedIn = 'true';
-        req.session.user = user;
-        res.redirect('/ideas');
-      }
-      else {
-        console.log('Invalid email or password');
-      }
-    }
-    else {
-      console.log('Invalid email or password');
-    }
-  } 
-  catch (err) {
-    next(err);
-  }
+module.exports.postLoginController = (req,res) => {
+  res.redirect('/ideas');
 };
 
-module.exports.getLogoutController = async(req,res,next) => {
-  try {
-    await req.session.destroy();
-    res.redirect('/auth/login');
-  } 
-  catch (err) {
-    next(err);  
-  }
+module.exports.getLogoutController = (req,res,next) => {
+  req.logout();
+  res.redirect('/auth/login');
 };

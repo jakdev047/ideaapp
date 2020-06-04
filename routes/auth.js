@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const {registerValidator,loginValidator} = require('../validators/userValiator');
 const {registerValidate,loginValidate} = require('../validators/userValidate');
@@ -16,7 +17,12 @@ router.post('/register',[registerValidator(),registerValidate],addRegisterContro
 router.get('/login',getLoginController);
 
 // post login form 
-router.post('/login',[loginValidator(),loginValidate],postLoginController);
+router.post(
+  '/login',
+  [loginValidator(),loginValidate],
+  passport.authenticate('local',{failureRedirect:'/auth/login'}),
+  postLoginController
+);
 
 // get logout 
 router.get('/logout',getLogoutController);
