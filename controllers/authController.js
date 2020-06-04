@@ -12,6 +12,7 @@ module.exports.addRegisterController = async(req,res,next) => {
   try {
     const user = new User(req.body);
     await user.save();
+    req.flash('success_msg','Registration Successfully');
     res.redirect('/ideas');
   } 
   catch (err) {
@@ -27,10 +28,12 @@ module.exports.getLoginController = (req,res) => {
 };
 
 module.exports.postLoginController = (req,res) => {
+  req.flash('success_msg','Login Successfully');
   res.redirect('/ideas');
 };
 
 module.exports.getLogoutController = (req,res,next) => {
   req.logout();
+  req.flash('success_msg','Logout Successfully');
   res.redirect('/auth/login');
 };

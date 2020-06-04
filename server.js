@@ -11,6 +11,7 @@ const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
 const passport = require('passport');
 require('./middleware/passport').localstrategy(passport);
+const flash = require('connect-flash');
 
 const {truncateContent,compareValues,comparePath} = require('./helpers/hbs');
 
@@ -50,9 +51,12 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(flash());
+
 // global login user data capture
 app.use((req,res,next)=> {
   res.locals.user = req.user || null;
+  res.locals.success_msg = req.flash('success_msg');
   next();
 });
 

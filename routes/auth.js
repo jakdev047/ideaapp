@@ -20,7 +20,7 @@ router.get('/login',getLoginController);
 router.post(
   '/login',
   [loginValidator(),loginValidate],
-  passport.authenticate('local',{failureRedirect:'/auth/login'}),
+  passport.authenticate('local',{failureRedirect:'/auth/login',failureFlash:true}),
   postLoginController
 );
 
