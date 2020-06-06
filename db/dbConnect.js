@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
-// mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds163014.mlab.com:63014/ideaapp
-
 const url = 'mongodb://localhost:27017/ideas-app';
+
+// const url = `mongodb://${process.env.DB_USER}:${process.env.DB_PASSWORD}@ds259089.mlab.com:59089/ideashareapp`;
 
 const connectDB = async function(){
   try {
@@ -12,7 +12,6 @@ const connectDB = async function(){
       useFindAndModify:false,
       useCreateIndex:true
     })
-
     console.log(`Database has running...`)
   }
   catch(err) {

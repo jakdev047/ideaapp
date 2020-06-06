@@ -5,7 +5,7 @@ const bcrypt = require('bcryptjs');
 
 const {clientID,clientSecret} = require('../db/key');
 
-const localstrategy = async(passport) => {
+const localstrategy = passport => {
   passport.use(new LocalStrategy(
     {
       usernameField: 'email'
@@ -44,12 +44,12 @@ const localstrategy = async(passport) => {
   });
 };
 
-const googlestrategy = async(passport) => {
+const googlestrategy = passport => {
   passport.use(new GoogleStrategy(
     {
       clientID,
       clientSecret,
-      callbackURL: "/auth/google/callback"
+      callbackURL: '/auth/google/callback'
     },
     async(accessToken, refreshToken, profile, next) => {
       try {
@@ -66,7 +66,7 @@ const googlestrategy = async(passport) => {
         else {
           const userToSave = new User(profileToSave);
           await userToSave.save({validateBeforeSave:false});
-          next(null,user);
+          next(null,userToSave);
         }
       } 
       catch (err) {
